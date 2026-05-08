@@ -1,0 +1,14 @@
+langchain
+langchain-community
+langchain-ollama
+langchain-chroma
+langchain-groq
+pymupdf
+celery
+redis
+flower
+streamlit
+python-dotenv
+fastapi
+uvicorn
+python-multipart

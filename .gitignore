@@ -1,0 +1,21 @@
+# --- Secrets (NEVER push these) ---
+.env
+
+# --- Virtual Environment ---
+venv/
+.venv/
+
+# --- Python cache ---
+__pycache__/
+*.py[cod]
+*.pyo
+
+# --- ChromaDB local data ---
+db/
+
+# --- Streamlit ---
+.streamlit/
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
