@@ -1,44 +1,12 @@
 import streamlit as st
-import fitz  # pymupdf
-from langchain_chroma import Chroma
+from src.pipeline import get_pdf_text, get_text_chunks, create_vector_store
 from src.llm import get_llm
-from langchain_text_splitters import CharacterTextSplitter
-from langchain_ollama import OllamaEmbeddings
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.messages import HumanMessage, AIMessage
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from htmlTemplates import bot_template, user_template, css
 
-
-
-def get_pdf_text(pdf_docs):
-    text = ""
-    for pdf in pdf_docs:
-        # fitz reads directly from bytes — works with Streamlit's file uploader
-        doc = fitz.open(stream=pdf.read(), filetype="pdf")
-        for page in doc:
-            text += page.get_text()
-    return text
-
-
-
-def get_text_chunks(raw_text):
-    text_splitter = CharacterTextSplitter(
-        separator="\n",
-        chunk_size=1000,
-        chunk_overlap=200,
-        length_function=len,
-        
-    )
-    chunks = text_splitter.split_text(raw_text)
-    return chunks
-
-
-def create_vector_store(text_chunks):
-    embeddings= OllamaEmbeddings(model="mxbai-embed-large")
-    vector_store = Chroma.from_texts(texts=text_chunks,embedding=embeddings)
-    return vector_store
 
 def get_conversation_chain(vector_store):
     llm = get_llm()  # uses Ollama or Groq depending on LLM_PROVIDER in .env
