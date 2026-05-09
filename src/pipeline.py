@@ -31,5 +31,5 @@ def get_text_chunks(raw_text: str) -> list[str]:
 def create_vector_store(text_chunks: list[str]):
     """Embed chunks and store in ChromaDB. Returns the vector store."""
     embeddings = OllamaEmbeddings(model="mxbai-embed-large")
-    vector_store = Chroma.from_texts(texts=text_chunks, embedding=embeddings)
+    vector_store = Chroma.from_texts(texts=text_chunks, embedding=embeddings,persist_directory="./chroma_db")
     return vector_store
